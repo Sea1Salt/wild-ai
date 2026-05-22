@@ -10,10 +10,10 @@ export function Nav() {
           </div>
           <div>
             <p className="text-lg font-bold tracking-normal text-forest-900">
-              WILD-AI
+              AI-WSCBA
             </p>
             <p className="hidden text-xs font-medium text-stone-500 sm:block">
-              Wildlife Intelligent Listening & Detection using AI
+              AI-Based Wildlife Sound Classification for Biodiversity Assessment
             </p>
           </div>
         </div>
