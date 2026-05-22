@@ -1,5 +1,6 @@
 import { Gauge, Leaf, Radio, ShieldCheck, Waves } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const features = [
   {
@@ -24,16 +25,57 @@ const features = [
   },
 ];
 
+const heroSlides = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1800&q=80",
+    alt: "Misty forest canopy",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80",
+    alt: "Dense green forest trail",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1800&q=80",
+    alt: "Sunlit tropical forest",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80",
+    alt: "Forest landscape at dawn",
+  },
+];
+
 export function HomeHero() {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveSlide((currentSlide) => (currentSlide + 1) % heroSlides.length);
+    }, 5500);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <img
-          className="h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1800&q=80"
-          alt="Misty forest canopy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-forest-900/85 via-forest-900/65 to-cream" />
+        <AnimatePresence mode="sync">
+          <motion.img
+            key={heroSlides[activeSlide].image}
+            className="absolute inset-0 h-full w-full object-cover"
+            src={heroSlides[activeSlide].image}
+            alt={heroSlides[activeSlide].alt}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.02 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-900/85 via-forest-900/62 to-cream" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(248,244,233,0.14),transparent_28%),linear-gradient(90deg,rgba(23,35,15,0.42),transparent_55%)]" />
       </div>
       <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-20 sm:px-6 lg:px-8 lg:pb-20 lg:pt-28">
         <motion.div
@@ -79,6 +121,22 @@ export function HomeHero() {
               </motion.article>
             );
           })}
+        </div>
+
+        <div className="mt-8 flex items-center gap-2" aria-label="Forest banner slides">
+          {heroSlides.map((slide, index) => (
+            <button
+              key={slide.image}
+              type="button"
+              onClick={() => setActiveSlide(index)}
+              className={`h-2.5 rounded-full transition-all ${
+                activeSlide === index
+                  ? "w-9 bg-cream"
+                  : "w-2.5 bg-cream/45 hover:bg-cream/70"
+              }`}
+              aria-label={`Show forest banner ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
