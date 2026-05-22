@@ -246,19 +246,6 @@ export function AddDeviceModal({
 
               <label className="block">
                 <span className="text-sm font-semibold text-stone-700">
-                  Device ID
-                </span>
-                <input
-                  required
-                  value={form.id}
-                  onChange={handleFieldChange("id")}
-                  className="mt-2 h-12 w-full rounded-2xl border border-stone-200 bg-white px-4 text-sm outline-none transition focus:border-forest-500 focus:ring-4 focus:ring-forest-100"
-                  placeholder="WAI-0004"
-                />
-              </label>
-
-              <label className="block">
-                <span className="text-sm font-semibold text-stone-700">
                   Location
                 </span>
                 <input

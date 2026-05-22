@@ -90,7 +90,7 @@ export default function App() {
 
   return (
     <main className="min-h-screen bg-cream text-stone-900">
-      <Nav onAddDevice={handleAddDevice} />
+      <Nav />
       <HomeHero />
       <DeviceProfiles
         devices={visibleDevices}
