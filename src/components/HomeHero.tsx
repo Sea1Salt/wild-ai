@@ -76,7 +76,7 @@ export function HomeHero() {
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-b from-forest-900/82 via-forest-900/48 to-forest-900/28" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(248,244,233,0.08),transparent_26%),linear-gradient(90deg,rgba(23,35,15,0.5),rgba(23,35,15,0.16)_56%,transparent_78%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent via-cream/24 to-cream/68" />
+        <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-cream/34 to-cream/82" />
       </div>
       <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-20 sm:px-6 lg:px-8 lg:pb-20 lg:pt-28">
         <motion.div
