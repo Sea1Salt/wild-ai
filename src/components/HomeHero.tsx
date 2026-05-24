@@ -93,7 +93,7 @@ export function HomeHero() {
             Listen to Forests, Understand Biodiversity.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-100">
-            AI-WSCBA monitors wildlife sounds from connected field devices and
+            AWiSBA monitors wildlife sounds from connected field devices and
             transforms them into actionable biodiversity insights.
           </p>
           <p className="mt-4 max-w-2xl text-sm leading-6 text-stone-200">

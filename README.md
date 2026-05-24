@@ -1,8 +1,8 @@
-# AI-WSCBA
+# AWiSBA
 
 AI-Based Wildlife Acoustic Classification System for Biodiversity Assessment in Forest Areas
 
-AI-WSCBA is a premium eco-tech frontend for managing forest acoustic field devices, reviewing sound-group presence, tracking acoustic activity over time, and monitoring device health.
+AWiSBA is a premium eco-tech frontend for managing forest acoustic field devices, reviewing sound-group presence, tracking acoustic activity over time, and monitoring device health.
 
 ## Tech Stack
 

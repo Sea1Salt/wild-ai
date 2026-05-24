@@ -10,7 +10,7 @@ export function Nav() {
           </div>
           <div>
             <p className="text-lg font-bold tracking-normal text-forest-900">
-              AI-WSCBA
+              AWiSBA
             </p>
             <p className="hidden text-xs font-medium text-stone-500 sm:block">
               AI-Based Wildlife Sound Classification for Biodiversity Assessment
