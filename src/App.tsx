@@ -4,6 +4,7 @@ import { Dashboard } from "./components/Dashboard";
 import { DeviceProfiles } from "./components/DeviceProfiles";
 import { HomeHero } from "./components/HomeHero";
 import { Nav } from "./components/Nav";
+import { SmartAcousticAnalysis } from "./components/SmartAcousticAnalysis";
 import { mockDevices } from "./data/mockDevices";
 import type { Device } from "./types/device";
 import { filterDevices, type DeviceFilter } from "./utils/deviceStatus";
@@ -92,6 +93,7 @@ export default function App() {
     <main className="min-h-screen bg-cream text-stone-900">
       <Nav />
       <HomeHero />
+      <SmartAcousticAnalysis />
       <DeviceProfiles
         devices={visibleDevices}
         searchTerm={searchTerm}
