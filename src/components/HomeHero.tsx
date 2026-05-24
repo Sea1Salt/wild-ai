@@ -78,7 +78,7 @@ export function HomeHero() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(248,244,233,0.08),transparent_26%),linear-gradient(90deg,rgba(23,35,15,0.5),rgba(23,35,15,0.16)_56%,transparent_78%)]" />
         <div className="absolute inset-x-0 bottom-0 h-72 bg-[linear-gradient(to_top,#f8f4e9_0%,rgba(248,244,233,0.92)_18%,rgba(248,244,233,0.62)_42%,rgba(248,244,233,0.24)_68%,rgba(248,244,233,0)_100%)]" />
       </div>
-      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-20 sm:px-6 lg:px-8 lg:pb-20 lg:pt-28">
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 sm:pt-14 lg:px-8 lg:pb-20 lg:pt-16">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
