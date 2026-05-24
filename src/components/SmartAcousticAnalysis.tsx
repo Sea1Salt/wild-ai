@@ -230,9 +230,6 @@ export function SmartAcousticAnalysis() {
                 )}
                 {isAnalyzing ? "Analyzing acoustic patterns..." : "Analyze Sound"}
               </button>
-              <p className="text-xs leading-5 text-stone-500">
-                Results report detected sound groups, not population counts.
-              </p>
             </div>
           </div>
         </div>
