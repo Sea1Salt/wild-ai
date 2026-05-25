@@ -1,5 +1,6 @@
-import { Bird, Bug, CircleHelp, Music2, Volume2 } from "lucide-react";
+import { Bird, Bug, CircleHelp, Volume2 } from "lucide-react";
 import type { SoundGroup } from "../types/device";
+import { FrogIcon } from "./FrogIcon";
 
 const soundStyles: Record<SoundGroup, string> = {
   Bird: "bg-sky-50 text-sky-700 ring-sky-100",
@@ -11,7 +12,7 @@ const soundStyles: Record<SoundGroup, string> = {
 
 const soundIcons = {
   Bird,
-  Frog: Music2,
+  Frog: FrogIcon,
   Insect: Bug,
   Noise: Volume2,
   Unknown: CircleHelp,

@@ -1,3 +1,4 @@
+import type { ComponentType, SVGProps } from "react";
 import {
   Activity,
   Battery,
@@ -7,7 +8,11 @@ import {
   Gauge,
   HardDrive,
   Info,
+  Bird,
+  Bug,
+  MapPin,
   Radio,
+  Radar,
   RefreshCw,
   Signal,
   Volume2,
@@ -27,6 +32,7 @@ import {
 } from "recharts";
 import type { Device, SoundGroup } from "../types/device";
 import { getStatusLabel } from "../utils/deviceStatus";
+import { FrogIcon } from "./FrogIcon";
 import { MetricCard } from "./MetricCard";
 import { SoundChip } from "./SoundChip";
 import { StatusBadge } from "./StatusBadge";
@@ -150,6 +156,8 @@ export function Dashboard({ device, onBack }: DashboardProps) {
             tone={{ background: "bg-amber-50", icon: "text-amber-700" }}
           />
         </div>
+
+        <AcousticCoverageRadar device={device} />
 
         <div className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.9fr]">
           <section className="rounded-[1.75rem] border border-stone-200 bg-white p-5 shadow-sm">
@@ -345,6 +353,198 @@ export function Dashboard({ device, onBack }: DashboardProps) {
     </main>
   );
 }
+
+function AcousticCoverageRadar({ device }: { device: Device }) {
+  const markers = getCoverageMarkers(device);
+  const hasMarkers = markers.length > 0;
+
+  return (
+    <section className="mt-6 overflow-hidden rounded-[1.75rem] border border-stone-200 bg-white shadow-sm">
+      <div className="grid gap-0 xl:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative min-h-[440px] overflow-hidden bg-forest-900">
+          <iframe
+            className="absolute inset-0 h-full w-full scale-110 border-0 opacity-55 grayscale"
+            src={`https://www.google.com/maps?q=${encodeURIComponent(
+              device.location,
+            )}&z=11&output=embed`}
+            title={`${device.name} Google map background`}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(23,35,15,0.88),rgba(52,66,31,0.54)),radial-gradient(circle_at_50%_50%,rgba(110,231,183,0.16),transparent_40%)]" />
+          <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(248,244,233,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(248,244,233,0.14)_1px,transparent_1px)] [background-size:44px_44px]" />
+          <div className="absolute inset-8 rounded-[2rem] border border-cream/10" />
+          <div className="absolute left-6 top-6 z-30 rounded-2xl border border-cream/15 bg-forest-900/75 px-4 py-3 text-cream shadow-soft backdrop-blur">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100/75">
+              Device
+            </p>
+            <p className="mt-1 text-sm font-semibold">{device.name}</p>
+          </div>
+
+          <div className="radar-stage absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2">
+            <div className="radar-ring radar-ring-outer" />
+            <div className="radar-ring radar-ring-middle" />
+            <div className="radar-ring radar-ring-inner" />
+            <div className="radar-pulse" />
+            <div className="radar-sweep" />
+            <div className="radar-crosshair radar-crosshair-horizontal" />
+            <div className="radar-crosshair radar-crosshair-vertical" />
+          </div>
+
+          <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+            <div className="grid h-16 w-16 place-items-center rounded-3xl border border-cream/30 bg-cream text-forest-900 shadow-soft">
+              <Radio className="h-8 w-8" />
+            </div>
+          </div>
+
+          {hasMarkers ? (
+            markers.map((marker) => {
+              const Icon = coverageIconMap[marker.sound];
+              const markerStyle = {
+                transform: `translate(-50%, -50%) translate(${marker.x}px, ${marker.y}px)`,
+              };
+
+              return (
+                <div
+                  key={`${device.id}-${marker.sound}`}
+                  className="absolute left-1/2 top-1/2 z-20"
+                  style={markerStyle}
+                >
+                  <div
+                    className={`grid h-12 w-12 place-items-center rounded-full border shadow-lg backdrop-blur ${coverageMarkerClasses[marker.sound]}`}
+                    title={`${marker.sound} sound-group presence`}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="absolute inset-x-8 bottom-8 rounded-2xl border border-cream/15 bg-white/10 p-4 text-center text-sm font-semibold text-cream backdrop-blur">
+              Waiting for acoustic data
+            </div>
+          )}
+        </div>
+
+        <div className="p-6 sm:p-7">
+          <div className="inline-flex items-center gap-2 rounded-full bg-forest-50 px-3 py-1 text-xs font-semibold text-forest-700">
+            <Radar className="h-4 w-4" />
+            Acoustic Coverage Radar
+          </div>
+          <h2 className="mt-4 text-2xl font-semibold tracking-normal text-stone-950">
+            Device acoustic field
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-stone-500">
+            A simulated view of the device coverage radius with acoustic activity
+            markers for detected animal sound groups in this monitoring area.
+          </p>
+
+          <div className="mt-6 grid gap-3">
+            <RadarDetail icon={MapPin} label="Device Location" value={device.location} />
+            <RadarDetail icon={Radar} label="Coverage Radius" value="Simulated acoustic range" />
+            <RadarDetail
+              icon={Activity}
+              label="Activity Markers"
+              value={hasMarkers ? `${markers.length} animal sound groups` : "Waiting for data"}
+            />
+          </div>
+
+          <div className="mt-6">
+            <p className="text-sm font-semibold text-stone-700">
+              Sound groups in coverage
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {hasMarkers ? (
+                markers.map((marker) => (
+                  <SoundChip key={`chip-${marker.sound}`} sound={marker.sound} />
+                ))
+              ) : (
+                <span className="rounded-full bg-stone-100 px-3 py-1 text-xs font-semibold text-stone-500">
+                  Waiting for data
+                </span>
+              )}
+            </div>
+          </div>
+
+          <p className="mt-6 rounded-2xl bg-stone-50 p-4 text-xs leading-5 text-stone-500">
+            Marker positions are mock placements for visualization until precise
+            acoustic localization data is available.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RadarDetail({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl bg-stone-50 p-4">
+      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-forest-700">
+        <Icon className="h-5 w-5" />
+      </div>
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-stone-400">
+          {label}
+        </p>
+        <p className="mt-1 text-sm font-semibold text-stone-900">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+type AnimalSoundGroup = Extract<SoundGroup, "Bird" | "Frog" | "Insect">;
+type CoverageIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+const animalSoundGroups: AnimalSoundGroup[] = ["Bird", "Frog", "Insect"];
+
+const coverageIconMap: Record<AnimalSoundGroup, CoverageIcon> = {
+  Bird,
+  Frog: FrogIcon,
+  Insect: Bug,
+};
+
+const coverageMarkerClasses: Record<AnimalSoundGroup, string> = {
+  Bird: "border-sky-200/70 bg-sky-50/90 text-sky-700",
+  Frog: "border-emerald-200/70 bg-emerald-50/90 text-emerald-700",
+  Insect: "border-lime-200/70 bg-lime-50/90 text-lime-700",
+};
+
+function getCoverageMarkers(device: Device) {
+  if (device.status === "waiting") {
+    return [];
+  }
+
+  return Array.from(new Set(device.latestSounds))
+    .filter((sound): sound is AnimalSoundGroup =>
+      animalSoundGroups.includes(sound as AnimalSoundGroup),
+    )
+    .map((sound, index) => {
+    const seed = hashDeviceSound(`${device.id}-${sound}-${index}`);
+    const angle = (seed % 360) * (Math.PI / 180);
+    const radius = 58 + (seed % 68);
+
+    return {
+      sound,
+      x: Math.round(Math.cos(angle) * radius),
+      y: Math.round(Math.sin(angle) * radius),
+    };
+    });
+}
+
+function hashDeviceSound(value: string) {
+  return value.split("").reduce((hash, character) => {
+    return (hash * 31 + character.charCodeAt(0)) % 9973;
+  }, 17);
+}
+
 
 function PeakItem({ label, value }: { label: string; value: string }) {
   return (
