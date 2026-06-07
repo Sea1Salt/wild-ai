@@ -28,23 +28,27 @@ const features = [
 const heroSlides = [
   {
     image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80",
+    fallbackImage: "/assets/forest-slide-3.svg",
+    alt: "Forest landscape at dawn",
+  },
+  {
+    image:
       "https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1800&q=80",
+    fallbackImage: "/assets/forest-slide-1.svg",
     alt: "Misty forest canopy",
   },
   {
     image:
       "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=80",
+    fallbackImage: "/assets/forest-slide-2.svg",
     alt: "Dense green forest trail",
   },
   {
     image:
       "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1800&q=80",
+    fallbackImage: "/assets/forest-slide-3.svg",
     alt: "Sunlit tropical forest",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80",
-    alt: "Forest landscape at dawn",
   },
 ];
 
@@ -68,6 +72,9 @@ export function HomeHero() {
             className="absolute inset-0 h-full w-full object-cover"
             src={heroSlides[activeSlide].image}
             alt={heroSlides[activeSlide].alt}
+            onError={(event) => {
+              event.currentTarget.src = heroSlides[activeSlide].fallbackImage;
+            }}
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}

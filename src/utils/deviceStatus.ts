@@ -1,4 +1,5 @@
 import type { Device, DeviceStatus } from "../types/device";
+import { formatDeviceId } from "./deviceIdentity";
 
 export type DeviceFilter = "all" | "online" | "offline" | "lowBattery";
 
@@ -36,7 +37,13 @@ export function filterDevices(
   return devices.filter((device) => {
     const matchesSearch =
       !normalizedSearch ||
-      [device.name, device.id, device.location, device.description]
+      [
+        device.name,
+        device.id,
+        formatDeviceId(device.id),
+        device.location,
+        device.description,
+      ]
         .join(" ")
         .toLowerCase()
         .includes(normalizedSearch);

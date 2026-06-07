@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" role="img" aria-label="Forest field device">
+  <defs>
+    <linearGradient id="bg4" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#b7b894"/>
+      <stop offset=".5" stop-color="#53613e"/>
+      <stop offset="1" stop-color="#17230f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="700" fill="url(#bg4)"/>
+  <path d="M0 450 C160 350 280 410 420 330 C620 215 720 410 1000 270 L1000 700 L0 700 Z" fill="#26381e" opacity=".88"/>
+  <path d="M0 560 C210 460 380 560 570 470 C760 380 870 475 1000 420 L1000 700 L0 700 Z" fill="#10180d"/>
+  <g fill="#17230f">
+    <path d="M90 200 l45 112 h-28 l46 98 h-34 l58 140 h-174 l58-140 h-34 l46-98 h-28z"/>
+    <path d="M800 170 l56 142 h-36 l58 124 h-44 l72 174 h-216 l72-174 h-44 l58-124 h-36z"/>
+  </g>
+  <rect x="390" y="250" width="220" height="250" rx="46" fill="#f8f4e9" opacity=".96"/>
+  <circle cx="500" cy="365" r="68" fill="#17230f"/>
+  <path d="M452 365c0-32 20-58 48-58s48 26 48 58-20 58-48 58-48-26-48-58z" fill="#f8f4e9"/>
+  <path d="M430 545h140c44 0 80 36 80 80v20H350v-20c0-44 36-80 80-80z" fill="#f8f4e9" opacity=".94"/>
+  <circle cx="500" cy="365" r="16" fill="#17230f"/>
+  <path d="M500 250v-54M452 280l-40-38M548 280l40-38" stroke="#f8f4e9" stroke-width="16" stroke-linecap="round"/>
+</svg>

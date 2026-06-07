@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" role="img" aria-label="Dense tropical forest canopy">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#a9b18e"/>
+      <stop offset=".55" stop-color="#425236"/>
+      <stop offset="1" stop-color="#111a0d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".75" cy=".22" r=".42">
+      <stop offset="0" stop-color="#f6d89d" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f6d89d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1800" height="1000" fill="url(#bg)"/>
+  <rect width="1800" height="1000" fill="url(#glow)"/>
+  <g opacity=".42" fill="#e8ead2">
+    <ellipse cx="260" cy="170" rx="210" ry="92"/>
+    <ellipse cx="740" cy="145" rx="280" ry="110"/>
+    <ellipse cx="1330" cy="170" rx="340" ry="120"/>
+  </g>
+  <g fill="#26381e" opacity=".78">
+    <circle cx="170" cy="430" r="180"/>
+    <circle cx="370" cy="360" r="220"/>
+    <circle cx="650" cy="410" r="250"/>
+    <circle cx="970" cy="350" r="230"/>
+    <circle cx="1240" cy="420" r="265"/>
+    <circle cx="1570" cy="360" r="250"/>
+  </g>
+  <g fill="#16230f">
+    <path d="M0 480 C260 360 430 530 690 390 C900 278 1120 450 1345 330 C1510 242 1650 330 1800 280 L1800 1000 L0 1000 Z"/>
+    <path d="M0 690 C250 520 470 650 720 515 C950 390 1140 620 1380 500 C1560 410 1695 500 1800 455 L1800 1000 L0 1000 Z" fill="#0f180b"/>
+  </g>
+  <g stroke="#6f835d" stroke-width="5" opacity=".34">
+    <path d="M150 1000 C190 840 220 720 260 560"/>
+    <path d="M520 1000 C560 820 590 720 650 540"/>
+    <path d="M1060 1000 C1095 790 1140 670 1210 500"/>
+    <path d="M1510 1000 C1530 810 1580 665 1640 500"/>
+  </g>
+</svg>

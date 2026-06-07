@@ -16,6 +16,8 @@ interface DeviceProfilesProps {
   devices: Device[];
   searchTerm: string;
   activeFilter: DeviceFilter;
+  isLoading: boolean;
+  errorMessage: string | null;
   onSearchChange: (value: string) => void;
   onFilterChange: (filter: DeviceFilter) => void;
   onAddDevice: () => void;
@@ -27,6 +29,8 @@ export function DeviceProfiles({
   devices,
   searchTerm,
   activeFilter,
+  isLoading,
+  errorMessage,
   onSearchChange,
   onFilterChange,
   onAddDevice,
@@ -98,7 +102,25 @@ export function DeviceProfiles({
         </div>
       </div>
 
-      {devices.length === 0 ? (
+      {isLoading ? (
+        <div className="mt-8 rounded-[1.5rem] border border-stone-200 bg-white/75 p-10 text-center shadow-sm">
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-forest-100 border-t-forest-700" />
+          <h3 className="mt-5 text-xl font-semibold text-stone-950">
+            Loading device profiles
+          </h3>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-stone-500">
+            Fetching field device profiles from Supabase.
+          </p>
+        </div>
+      ) : errorMessage ? (
+        <div className="mt-8">
+          <EmptyState
+            onAddDevice={onAddDevice}
+            title="Cannot load device profiles"
+            description={`Supabase error: ${errorMessage}`}
+          />
+        </div>
+      ) : devices.length === 0 ? (
         <div className="mt-8">
           <EmptyState
             onAddDevice={onAddDevice}

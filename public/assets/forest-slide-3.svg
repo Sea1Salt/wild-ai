@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" role="img" aria-label="Mountain forest valley">
+  <defs>
+    <linearGradient id="sky3" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#d6d0b2"/>
+      <stop offset=".5" stop-color="#8e9675"/>
+      <stop offset="1" stop-color="#182510"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" x2="1">
+      <stop offset="0" stop-color="#d7dbc5" stop-opacity=".18"/>
+      <stop offset=".5" stop-color="#f8f4e9" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#d7dbc5" stop-opacity=".18"/>
+    </linearGradient>
+  </defs>
+  <rect width="1800" height="1000" fill="url(#sky3)"/>
+  <path d="M0 510 L280 260 L520 500 L760 210 L1080 540 L1320 280 L1800 570 L1800 1000 L0 1000 Z" fill="#637052" opacity=".7"/>
+  <path d="M0 610 L300 390 L520 560 L850 330 L1120 650 L1450 380 L1800 640 L1800 1000 L0 1000 Z" fill="#334525" opacity=".86"/>
+  <path d="M0 740 C250 640 520 760 790 670 C1080 575 1340 735 1800 610 L1800 1000 L0 1000 Z" fill="#17230f"/>
+  <path d="M0 850 C330 800 520 875 780 835 C1110 780 1390 850 1800 780 L1800 1000 L0 1000 Z" fill="#10180d"/>
+  <path d="M260 810 C560 745 890 760 1230 710 C1470 675 1640 680 1800 650 L1800 785 C1480 820 1250 875 900 875 C610 875 425 835 260 895 Z" fill="url(#water)"/>
+  <g fill="#10180d">
+    <path d="M120 425 l52 130 h-34 l55 116 h-40 l68 165 h-200 l68-165 h-40 l55-116 h-34z"/>
+    <path d="M420 455 l46 116 h-30 l50 108 h-38 l60 146 h-176 l60-146 h-38 l50-108 h-30z"/>
+    <path d="M1330 430 l58 145 h-38 l60 130 h-44 l74 180 h-220 l74-180 h-44 l60-130 h-38z"/>
+    <path d="M1580 390 l66 166 h-42 l68 146 h-52 l82 200 h-246 l82-200 h-52 l68-146 h-42z"/>
+  </g>
+</svg>

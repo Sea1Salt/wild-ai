@@ -1,5 +1,7 @@
 import { Battery, Edit3, MapPin, Radio, Signal, Waves } from "lucide-react";
+import { DEFAULT_DEVICE_IMAGE } from "../data/deviceDefaults";
 import type { Device } from "../types/device";
+import { formatDeviceId } from "../utils/deviceIdentity";
 import { SoundChip } from "./SoundChip";
 import { StatusBadge } from "./StatusBadge";
 
@@ -10,6 +12,8 @@ interface DeviceCardProps {
 }
 
 export function DeviceCard({ device, onViewDashboard, onEdit }: DeviceCardProps) {
+  const displayDeviceId = formatDeviceId(device.id);
+
   return (
     <article className="group overflow-hidden rounded-[1.75rem] border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
       <div className="relative h-56 overflow-hidden">
@@ -17,6 +21,9 @@ export function DeviceCard({ device, onViewDashboard, onEdit }: DeviceCardProps)
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
           src={device.image}
           alt={`${device.name} field device`}
+          onError={(event) => {
+            event.currentTarget.src = DEFAULT_DEVICE_IMAGE;
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-900/75 via-transparent to-transparent" />
         <div className="absolute left-4 top-4">
@@ -36,7 +43,7 @@ export function DeviceCard({ device, onViewDashboard, onEdit }: DeviceCardProps)
       <div className="space-y-5 p-5">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">
-            {device.id}
+            {displayDeviceId}
           </p>
           <p className="mt-2 min-h-12 text-sm leading-6 text-stone-600">
             {device.description}

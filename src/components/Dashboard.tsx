@@ -19,6 +19,7 @@ import {
   Waves,
   type LucideIcon,
 } from "lucide-react";
+import { DEFAULT_DEVICE_IMAGE } from "../data/deviceDefaults";
 import {
   Area,
   AreaChart,
@@ -31,6 +32,7 @@ import {
   YAxis,
 } from "recharts";
 import type { Device, SoundGroup } from "../types/device";
+import { formatDeviceId } from "../utils/deviceIdentity";
 import { getStatusLabel } from "../utils/deviceStatus";
 import { FrogIcon } from "./FrogIcon";
 import { MetricCard } from "./MetricCard";
@@ -45,6 +47,7 @@ interface DashboardProps {
 const soundGroups: SoundGroup[] = ["Bird", "Frog", "Insect", "Noise", "Unknown"];
 
 export function Dashboard({ device, onBack }: DashboardProps) {
+  const displayDeviceId = formatDeviceId(device.id);
   const hasData = device.status !== "waiting" && device.timeline.length > 0;
   const indicatorValue =
     device.indicatorScore === null
@@ -62,6 +65,9 @@ export function Dashboard({ device, onBack }: DashboardProps) {
             className="h-full w-full object-cover opacity-35"
             src={device.image}
             alt={`${device.name} dashboard background`}
+            onError={(event) => {
+              event.currentTarget.src = DEFAULT_DEVICE_IMAGE;
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-br from-forest-900 via-forest-900/90 to-forest-700/70" />
         </div>
@@ -99,6 +105,9 @@ export function Dashboard({ device, onBack }: DashboardProps) {
               className="h-44 w-full rounded-[1.5rem] border border-white/20 object-cover shadow-soft"
               src={device.image}
               alt={`${device.name} field device`}
+              onError={(event) => {
+                event.currentTarget.src = DEFAULT_DEVICE_IMAGE;
+              }}
             />
             <div>
               <StatusBadge status={device.status} />
@@ -117,7 +126,7 @@ export function Dashboard({ device, onBack }: DashboardProps) {
                 </div>
                 <div className="rounded-2xl bg-white/10 p-4 backdrop-blur">
                   <p className="text-stone-300">Device ID</p>
-                  <p className="mt-1 text-xl font-semibold">{device.id}</p>
+                  <p className="mt-1 text-xl font-semibold">{displayDeviceId}</p>
                 </div>
               </div>
             </div>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" role="img" aria-label="Misty evergreen forest at dawn">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#d8d7c2"/>
+      <stop offset="0.46" stop-color="#8a9276"/>
+      <stop offset="1" stop-color="#25331f"/>
+    </linearGradient>
+    <linearGradient id="mist" x1="0" x2="1">
+      <stop offset="0" stop-color="#f8f4e9" stop-opacity=".45"/>
+      <stop offset=".55" stop-color="#f8f4e9" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#f8f4e9" stop-opacity=".38"/>
+    </linearGradient>
+  </defs>
+  <rect width="1800" height="1000" fill="url(#sky)"/>
+  <circle cx="1360" cy="210" r="110" fill="#f2d39b" opacity=".38"/>
+  <path d="M0 510 C240 370 390 430 600 310 C830 180 1000 390 1180 280 C1370 165 1550 310 1800 220 L1800 1000 L0 1000 Z" fill="#526144" opacity=".58"/>
+  <path d="M0 610 C230 480 420 535 660 430 C910 318 1100 500 1310 390 C1500 292 1640 430 1800 355 L1800 1000 L0 1000 Z" fill="#334525" opacity=".78"/>
+  <g fill="#17230f">
+    <path d="M80 300 l70 170 h-45 l70 155 h-55 l82 190 h-235 l82-190 h-55 l70-155 h-45z"/>
+    <path d="M290 230 l86 220 h-54 l82 176 h-64 l96 238 h-292 l96-238 h-64 l82-176 h-54z"/>
+    <path d="M570 270 l76 190 h-50 l76 165 h-58 l88 220 h-264 l88-220 h-58 l76-165 h-50z"/>
+    <path d="M1040 220 l90 238 h-58 l88 190 h-70 l104 250 h-310 l104-250 h-70 l88-190 h-58z"/>
+    <path d="M1390 260 l78 205 h-50 l76 170 h-60 l92 225 h-270 l92-225 h-60 l76-170 h-50z"/>
+    <path d="M1660 205 l92 245 h-60 l90 192 h-70 l104 258 h-320 l104-258 h-70 l90-192 h-60z"/>
+  </g>
+  <rect y="530" width="1800" height="310" fill="url(#mist)"/>
+  <rect y="720" width="1800" height="280" fill="#10180d" opacity=".52"/>
+</svg>

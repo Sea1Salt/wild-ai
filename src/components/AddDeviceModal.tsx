@@ -1,7 +1,7 @@
 import { type ChangeEvent, type FormEvent, useEffect, useMemo, useState } from "react";
 import { ImagePlus, Save, Trash2, X } from "lucide-react";
 import type { Device } from "../types/device";
-import { DEFAULT_DEVICE_IMAGE } from "../data/mockDevices";
+import { DEFAULT_DEVICE_IMAGE } from "../data/deviceDefaults";
 
 interface AddDeviceModalProps {
   isOpen: boolean;
@@ -13,7 +13,6 @@ interface AddDeviceModalProps {
 
 interface DeviceFormState {
   name: string;
-  id: string;
   location: string;
   description: string;
   image: string;
@@ -21,7 +20,6 @@ interface DeviceFormState {
 
 const emptyForm: DeviceFormState = {
   name: "",
-  id: "",
   location: "",
   description: "",
   image: "",
@@ -48,7 +46,6 @@ export function AddDeviceModal({
     if (editingDevice) {
       setForm({
         name: editingDevice.name,
-        id: editingDevice.id,
         location: editingDevice.location,
         description: editingDevice.description,
         image: editingDevice.image,
@@ -58,10 +55,7 @@ export function AddDeviceModal({
       return;
     }
 
-    setForm({
-      ...emptyForm,
-      id: `WAI-${Date.now().toString().slice(-6)}`,
-    });
+    setForm(emptyForm);
     setUploadedImageUrl("");
     setIsConfirmingDelete(false);
   }, [editingDevice, isOpen]);
@@ -125,10 +119,9 @@ export function AddDeviceModal({
     event.preventDefault();
 
     const trimmedName = form.name.trim();
-    const trimmedId = form.id.trim();
     const trimmedLocation = form.location.trim();
 
-    if (!trimmedName || !trimmedId || !trimmedLocation) {
+    if (!trimmedName || !trimmedLocation) {
       return;
     }
 
@@ -136,13 +129,12 @@ export function AddDeviceModal({
       ? {
           ...editingDevice,
           name: trimmedName,
-          id: trimmedId,
           location: trimmedLocation,
           description: form.description.trim(),
           image: form.image || DEFAULT_DEVICE_IMAGE,
         }
       : {
-          id: trimmedId,
+          id: createDraftDeviceId(),
           name: trimmedName,
           location: trimmedLocation,
           description: form.description.trim(),
@@ -335,4 +327,12 @@ export function AddDeviceModal({
       </div>
     </div>
   );
+}
+
+function createDraftDeviceId() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+
+  return `draft-${Date.now()}`;
 }

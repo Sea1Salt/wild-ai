@@ -1,21 +1,54 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AddDeviceModal } from "./components/AddDeviceModal";
 import { Dashboard } from "./components/Dashboard";
 import { DeviceProfiles } from "./components/DeviceProfiles";
 import { HomeHero } from "./components/HomeHero";
 import { Nav } from "./components/Nav";
 import { SmartAcousticAnalysis } from "./components/SmartAcousticAnalysis";
-import { mockDevices } from "./data/mockDevices";
+import {
+  createDevice,
+  deleteDevice,
+  getDevices,
+  updateDevice,
+} from "./services/deviceService";
 import type { Device } from "./types/device";
 import { filterDevices, type DeviceFilter } from "./utils/deviceStatus";
 
 export default function App() {
-  const [devices, setDevices] = useState<Device[]>(mockDevices);
+  const [devices, setDevices] = useState<Device[]>([]);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingDevice, setEditingDevice] = useState<Device | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState<DeviceFilter>("all");
+  const [isDeviceLoading, setIsDeviceLoading] = useState(true);
+  const [deviceError, setDeviceError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getDevices()
+      .then((remoteDevices) => {
+        if (isMounted) {
+          setDevices(remoteDevices);
+          setDeviceError(null);
+        }
+      })
+      .catch((error: unknown) => {
+        if (isMounted) {
+          setDeviceError(getErrorMessage(error));
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsDeviceLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const selectedDevice = devices.find((device) => device.id === selectedDeviceId);
 
@@ -34,29 +67,47 @@ export default function App() {
     setIsModalOpen(true);
   };
 
-  const handleSaveDevice = (savedDevice: Device) => {
-    setDevices((currentDevices) => {
-      const editingId = editingDevice?.id;
-      const exists = currentDevices.some((device) => device.id === editingId);
+  const handleSaveDevice = async (savedDevice: Device) => {
+    const editingId = editingDevice?.id;
+    const exists = devices.some((device) => device.id === editingId);
 
-      if (exists) {
-        return currentDevices.map((device) =>
-          device.id === editingId ? savedDevice : device,
-        );
+    try {
+      const syncedDevice =
+        exists && editingId
+          ? await updateDevice(editingId, savedDevice)
+          : await createDevice(savedDevice);
+
+      setDevices((currentDevices) => {
+        if (exists) {
+          return currentDevices.map((device) =>
+            device.id === editingId ? syncedDevice : device,
+          );
+        }
+
+        return [syncedDevice, ...currentDevices];
+      });
+
+      if (selectedDeviceId === editingId) {
+        setSelectedDeviceId(syncedDevice.id);
       }
-
-      return [savedDevice, ...currentDevices];
-    });
-
-    if (selectedDeviceId === editingDevice?.id) {
-      setSelectedDeviceId(savedDevice.id);
+      setDeviceError(null);
+    } catch (error) {
+      setDeviceError(getErrorMessage(error));
+      return;
     }
 
     setIsModalOpen(false);
     setEditingDevice(null);
   };
 
-  const handleDeleteDevice = (deviceId: string) => {
+  const handleDeleteDevice = async (deviceId: string) => {
+    try {
+      await deleteDevice(deviceId);
+    } catch (error) {
+      setDeviceError(getErrorMessage(error));
+      return;
+    }
+
     setDevices((currentDevices) =>
       currentDevices.filter((device) => device.id !== deviceId),
     );
@@ -67,6 +118,7 @@ export default function App() {
 
     setIsModalOpen(false);
     setEditingDevice(null);
+    setDeviceError(null);
   };
 
   const closeModal = () => {
@@ -98,6 +150,8 @@ export default function App() {
         devices={visibleDevices}
         searchTerm={searchTerm}
         activeFilter={activeFilter}
+        isLoading={isDeviceLoading}
+        errorMessage={deviceError}
         onSearchChange={setSearchTerm}
         onFilterChange={setActiveFilter}
         onAddDevice={handleAddDevice}
@@ -113,4 +167,12 @@ export default function App() {
       />
     </main>
   );
+}
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Unable to connect to Supabase.";
 }
